@@ -1,0 +1,97 @@
+
+<html>
+
+<head>
+
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+
+<script>
+
+$(document).ready(function(){
+
+
+$("#submit").click(function(){
+
+alert("Api calling...!!!!")
+
+let url="http://127.0.0.1:2020/students/createStudent";
+
+let fname= $("#fname").val();
+
+let lname= $("#lname").val();
+
+let email= $("#email").val();
+
+let mob= $("#mob").val();
+
+let pwd= $("#pwd").val();
+
+// alert(fname);return false;
+
+let data= {"firstName":fname,
+
+"lastName":lname,
+
+"email":email,
+
+"mobileNumber":mob,
+
+"password":pwd}
+
+
+$.ajax({
+
+type:"POST",
+
+url:url,
+
+data:data,
+
+success:"",
+
+}).done(function(data){
+
+alert("success...")
+
+console.log("Succes data:",data)
+
+window.open(`students.html`, "_self");
+
+})
+
+});
+
+});
+
+</script>
+
+</head>
+
+
+<body>
+
+<div><h1>Student Registration</h1></div>
+
+<a href="students.html">Student Reports</a>
+
+<form action="#">
+
+<input type="text" name="firstName" id="fname" placeholder="First name"><br><br>
+
+<input type="text" name="lastName" id="lname" placeholder="Last name"><br><br>
+
+<input type="text" name="email" id="email" placeholder="Email"><br><br>
+
+<input type="text" name="mobileNumber" id="mob" placeholder="Mobile number"><br><br>
+
+<input type="text" name="password" id="pwd" placeholder="Password"><br><br>
+
+<input type="button" value="Submit" id="submit" >
+
+</form>
+
+
+
+</body>
+
+</html>

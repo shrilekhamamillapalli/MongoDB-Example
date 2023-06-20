@@ -1,0 +1,168 @@
+<html>
+
+<head>
+
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+
+<script>
+
+$(document).ready(function(){
+
+$("#submit").click(function(){
+
+alert("Api calling...!!!!")
+
+let url="http://127.0.0.1:2020/students/updateStudent";
+
+let fname= $("#fname").val();
+
+let lname= $("#lname").val();
+
+let email= $("#email").val();
+
+let mob= $("#mob").val();
+
+let id= $("#id").val();
+
+// alert(fname);return false;
+
+let data= {
+
+"id": id,
+
+"firstName":fname,
+
+"lastName":lname,
+
+"email":email,
+
+"mobileNumber":mob}
+
+
+$.ajax({
+
+type:"PUT",
+
+url:url,
+
+data:data,
+
+success:"",
+
+}).done(function(data){
+
+alert("success...")
+
+console.log("Succes data:",data)
+
+window.open(`students.html`, "_self");
+
+})
+
+});
+
+});
+
+function getStudentDetails(){
+
+// alert('working..')
+
+const urlString=window.location.search;
+
+console.log(urlString);
+
+const urlParms= new URLSearchParams(urlString);
+
+
+const id = urlParms.get('id');
+
+console.log("Student ID", id)
+
+getStudentDetailsById(id);
+
+}
+
+
+function getStudentDetailsById(id){
+
+// alert("Api calling...!!!!")
+
+let url=`http://127.0.0.1:2020/students/getStudentById/${id}`;
+
+// alert(fname);return false;
+
+let data= {}
+
+
+$.ajax({
+
+type:"GET",
+
+url:url,
+
+data:data,
+
+success:"",
+
+}).done(function(data){
+
+// alert("success...")
+
+console.log("Student data:",data)
+
+const stu_data=data.data[0];
+
+console.log("Student obj:",stu_data);
+
+
+$('#name').html(stu_data.firstName);
+
+
+$('#fname').val(stu_data.firstName);
+
+$('#id').val(stu_data._id);
+
+$('#lname').val(stu_data.lastName);
+
+$('#email').val(stu_data.email);
+
+$('#mob').val(stu_data.mobileNumber);
+
+})
+
+}
+
+</script>
+
+</head>
+
+
+<body onload="getStudentDetails()">
+
+<div><h1>Welcome, <span id="name" style="color:blue"></span></h1></div>
+
+<a href="students.html">Student Reports</a> &nbsp;&nbsp;&nbsp;&nbsp;
+
+<a href="registration.html">Add Student</a>
+
+<form action="#">
+
+<input type="hidden" name="id" id="id" placeholder="id" readonly><br><br>
+
+<input type="text" name="firstName" id="fname" placeholder="First name"><br><br>
+
+<input type="text" name="lastName" id="lname" placeholder="Last name"><br><br>
+
+<input type="text" name="email" id="email" placeholder="Email"><br><br>
+
+<input type="text" name="mobileNumber" id="mob" placeholder="Mobile number"><br><br>
+
+<input type="button" value="Submit" id="submit" >
+
+</form>
+
+
+
+</body>
+
+</html>

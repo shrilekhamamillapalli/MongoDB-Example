@@ -1,0 +1,164 @@
+<html>
+
+<head>
+
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+
+<script>
+
+$(document).ready(function(){
+
+
+});
+
+function getAllStudent(){
+
+// alert("Api calling...!!!!")
+
+let url="http://127.0.0.1:2020/students/getStudents";
+
+let data= ''
+
+
+$.ajax({
+
+type:"GET",
+
+url:url,
+
+data:data,
+
+success:"",
+
+}).done(function(data){
+
+// alert("success...")
+
+console.log("Succes data:",data,data.data.length)
+
+
+results=data.data;
+
+let table="<table border=1>";
+
+table+=`<tr>
+
+<td>#</td>
+
+<td>First Name</td>
+
+<td>Last Name</td>
+
+<td>Email</td>
+
+<td>Mobile</td>
+
+<td>Edit</td>
+
+<td>Delete</td>
+
+</tr>`;
+
+for(let i=0;i<data.data.length;i++){
+
+console.log(results[i].firstName)
+
+table+=`<tr>
+
+<td>${(1+i)}</td>
+
+<td>${results[i].firstName}</td>
+
+<td>${results[i].lastName}</td>
+
+<td>${results[i].email}</td>
+
+<td>${results[i].mobileNumber}</td>
+
+<td> <input type="button" value="Edit" onclick="editStudent('${results[i]._id}')" ></td>
+
+<td><input type="button" value="Delete" onclick="deleteStudent('${results[i]._id}')" ></td>
+
+</tr>`;
+
+}
+
+table+="</table>";
+
+
+// data.foreach(element => {
+
+console.log(table)
+
+// });
+
+$('#tableData').html(table)
+
+$('#total').html(data.data.length)
+
+
+})
+
+}
+
+function editStudent(id){
+
+window.open(`edit.html?id=${id}`, "_blank");
+
+}
+
+
+function deleteStudent(id){
+
+// alert("Api calling...!!!!")
+
+let url=`http://127.0.0.1:2020/students/deleteStudentById/${id}`;
+
+// alert(fname);return false;
+
+let data= {}
+
+
+$.ajax({
+
+type:"DELETE",
+
+url:url,
+
+data:data,
+
+success:"",
+
+}).done(function(data){
+
+// alert("success...")
+
+console.log("Student data:",data)
+
+window.open(`students.html`, "_self");
+
+})
+
+}
+
+</script>
+
+</head>
+
+
+<body onload="getAllStudent()">
+
+<div><h1>Student Details</h1></div>
+
+<div>Total Students: <b></b><span style="color: blue;" id="total"></span></b>
+
+&nbsp;&nbsp;&nbsp;<a href="registration.html">Add Student</a>
+
+</div>
+
+<div id="tableData"></div>
+
+
+</body>
+
+</html>
